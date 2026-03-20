@@ -1,0 +1,9 @@
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Java
+backend/target/
+
+# OS
+.DS_Store

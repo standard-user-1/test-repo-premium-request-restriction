@@ -1,0 +1,42 @@
+<main class="page">
+  <section class="todo-card">
+    <h1>To-Do List</h1>
+    <p class="subtitle">{{ todos().length }} tasks, {{ completedCount() }} completed</p>
+
+    <form (ngSubmit)="addTodo($event)" class="todo-form">
+      <input
+        type="text"
+        placeholder="Add a task..."
+        [value]="newTask()"
+        (input)="newTask.set($any($event.target).value)"
+      />
+      <button type="submit">Add</button>
+    </form>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    @if (loading()) {
+      <p class="status">Loading tasks...</p>
+    } @else if (todos().length === 0) {
+      <p class="status">No tasks yet. Add your first one.</p>
+    } @else {
+      <ul class="todo-list">
+        @for (todo of todos(); track todo.id) {
+          <li [class.done]="todo.completed">
+            <label>
+              <input
+                type="checkbox"
+                [checked]="todo.completed"
+                (change)="toggleTodo(todo.id)"
+              />
+              <span>{{ todo.title }}</span>
+            </label>
+            <button (click)="deleteTodo(todo.id)">Delete</button>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>
